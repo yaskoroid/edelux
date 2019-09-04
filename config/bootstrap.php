@@ -1,6 +1,7 @@
 <?php
 
 use Symfony\Component\Dotenv\Dotenv;
+use Doctrine\DBAL\Types\Type;
 
 require dirname(__DIR__).'/vendor/autoload.php';
 
@@ -16,6 +17,9 @@ if (is_array($env = @include dirname(__DIR__).'/.env.local.php')) {
     // load all the .env files
     (new Dotenv(false))->loadEnv(dirname(__DIR__).'/.env');
 }
+
+// Register my type (Skoroid A. added this 2019-09-04)
+Type::addType('owner', 'App\Types\Owner');
 
 $_SERVER += $_ENV;
 $_SERVER['APP_ENV'] = $_ENV['APP_ENV'] = ($_SERVER['APP_ENV'] ?? $_ENV['APP_ENV'] ?? null) ?: 'dev';
